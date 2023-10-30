@@ -1,7 +1,16 @@
+import LineChart from "./component/lineChart";
+
+const chart = {
+  Aug: 0,
+  Jul: 22,
+  Jun: 4,
+
+};
+
 function App() {
   return (
     <>
-      <h1>Hello World</h1>
+      <LineChart data={chart} />
     </>
   );
 }
