@@ -1,13 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
-import { ChartData } from "../types/lineChart";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ChartData, Points } from "../types/lineChart";
 import {
   convertDataToPoints,
   createFillPath,
   createPath,
 } from "../functions/chart";
 
-export default function useSVGPath(data: ChartData, height: number) {
+export default function useSVGPath(
+  data: ChartData,
+  height: number,
+  pointRadios: number
+) {
   const [space, setSpace] = useState<number | null>(null);
+  const points = useRef<Points[]>([]);
 
   const maxValue = useMemo(
     () => Object.values(data).reduce((a, b) => Math.max(a, b), -Infinity),
@@ -17,16 +22,25 @@ export default function useSVGPath(data: ChartData, height: number) {
   function calcXSpacing() {
     const chartContainerWidth =
       document.querySelector("#ChartView")?.clientWidth;
+    const pointsSpace = pointRadios * 2;
     const spaceBetweenPoints = Math.floor(
-      Number(chartContainerWidth) / (Object.keys(data).length - 1)
+      (Number(chartContainerWidth) - pointsSpace) /
+        (Object.keys(data).length - 1)
     );
     setSpace(spaceBetweenPoints);
   }
 
   const path = useMemo(() => {
-    return space
-      ? createPath(convertDataToPoints(data, space, height, maxValue))
-      : null;
+    if (space) {
+      points.current = convertDataToPoints(
+        data,
+        space,
+        height - pointRadios,
+        maxValue
+      );
+      return createPath(points.current);
+    }
+    return null;
   }, [data, height, maxValue, space]);
 
   const fillPath = useMemo(
@@ -38,5 +52,5 @@ export default function useSVGPath(data: ChartData, height: number) {
     calcXSpacing();
   }, []);
 
-  return { path, fillPath };
+  return { path, fillPath, points: points.current };
 }

@@ -1,3 +1,41 @@
-#pv-line-chart svg{
-    background: #fff1
+#pv-line-chart * {
+    box-sizing: border-box
 }
+
+#pv-line-chart svg{
+    background: #fff1;
+}
+
+#pv-line-chart .path {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: dash 2s ease-in-out forwards;
+  }
+  
+  @keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+  }
+  
+  #pv-line-chart .fadeIn {
+    animation: fadeIn 1s linear forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: rotateX(95deg);
+    }
+  
+    to {
+        opacity: 1;
+        transform: rotateX(0deg);
+    }
+  }
+  
+  @keyframes pop {
+    to {
+        opacity: 1;
+    }
+  }

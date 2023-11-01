@@ -6,6 +6,7 @@ const LineChart = ({
   width = "100%",
   height = "250px",
   color = "#FFB800",
+  pointRadios = 10,
   data,
 }: LineChartProps) => {
   const style = {
@@ -14,9 +15,7 @@ const LineChart = ({
     width,
     color: "var(--chart-accent-color)",
   } as React.CSSProperties;
-  const { path, fillPath } = useSVGPath(data, 250);
-
-  console.count();
+  const { path, fillPath, points } = useSVGPath(data, 250, pointRadios);
 
   return (
     <div id="pv-line-chart" style={style}>
@@ -34,7 +33,16 @@ const LineChart = ({
           </linearGradient>
         </defs>
         {path && (
-          <g className="translate-y-3 translate-x-[40px]">
+          <g style={{transform:`translate(${pointRadios}px, ${pointRadios}px)`}}>
+            {points.length &&
+              points.map((point) => (
+                <circle
+                  cx={point.x}
+                  cy={point.y}
+                  r={pointRadios}
+                  fill={color}
+                />
+              ))}
             <path
               fill="none"
               stroke="currentColor"

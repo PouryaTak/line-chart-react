@@ -5,7 +5,8 @@ export type LineChartProps = {
   width?: string;
   height?: string;
   color?: string;
-  data: ChartData
+  pointRadios: number;
+  data: ChartData;
 };
 
 export type Result = {
