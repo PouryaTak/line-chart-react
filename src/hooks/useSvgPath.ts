@@ -19,7 +19,7 @@ export default function useSVGPath(
     [data]
   );
 
-  function calcXSpacing() {
+  const calcXSpacing = () => {
     const chartContainerWidth =
       document.querySelector("#ChartView")?.clientWidth;
     const pointsSpace = pointRadios * 2;
@@ -28,7 +28,7 @@ export default function useSVGPath(
         (Object.keys(data).length - 1)
     );
     setSpace(spaceBetweenPoints);
-  }
+  };
 
   const path = useMemo(() => {
     if (space) {
@@ -41,15 +41,29 @@ export default function useSVGPath(
       return createPath(points.current);
     }
     return null;
-  }, [data, height, maxValue, space]);
+  }, [data, height, maxValue, pointRadios, space]);
 
   const fillPath = useMemo(
     () => createFillPath(space, path, Object.keys(data).length),
     [data, path, space]
   );
 
+  const debounce = () => {
+    let timer: number;
+    return (): void => {
+      clearTimeout(timer);
+      timer = setTimeout(calcXSpacing, 300);
+    };
+  };
+
+  const reCalculate = debounce();
+
   useEffect(() => {
     calcXSpacing();
+    window.addEventListener("resize", reCalculate);
+    return () => {
+      window.removeEventListener("resize", reCalculate);
+    };
   }, []);
 
   return { path, fillPath, points: points.current };
