@@ -2,7 +2,7 @@ import LineChart from "./component/lineChart";
 
 const chart = {
   Aug: 0,
-  Jul: 22,
+  Jul: 10,
   Jun: 4,
 
 };

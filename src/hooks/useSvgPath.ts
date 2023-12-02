@@ -5,6 +5,7 @@ import {
   createFillPath,
   createPath,
 } from "../functions/chart";
+import useResizeListener from "./useResizeListener";
 
 export default function useSVGPath(
   data: ChartData,
@@ -16,6 +17,10 @@ export default function useSVGPath(
 
   const maxValue = useMemo(
     () => Object.values(data).reduce((a, b) => Math.max(a, b), -Infinity),
+    [data]
+  );
+  const minValue = useMemo(
+    () => Object.values(data).reduce((a, b) => Math.min(a, b), -Infinity),
     [data]
   );
 
@@ -35,8 +40,9 @@ export default function useSVGPath(
       points.current = convertDataToPoints(
         data,
         space,
-        height - pointRadios,
-        maxValue
+        height,
+        maxValue,
+        pointRadios
       );
       return createPath(points.current);
     }
@@ -48,23 +54,7 @@ export default function useSVGPath(
     [data, path, space]
   );
 
-  const debounce = () => {
-    let timer: number;
-    return (): void => {
-      clearTimeout(timer);
-      timer = setTimeout(calcXSpacing, 300);
-    };
-  };
+  useResizeListener(calcXSpacing);
 
-  const reCalculate = debounce();
-
-  useEffect(() => {
-    calcXSpacing();
-    window.addEventListener("resize", reCalculate);
-    return () => {
-      window.removeEventListener("resize", reCalculate);
-    };
-  }, []);
-
-  return { path, fillPath, points: points.current };
+  return { path, fillPath, points: points.current, maxValue, minValue };
 }

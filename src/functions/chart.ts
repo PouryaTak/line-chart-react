@@ -8,12 +8,13 @@ export function convertDataToPoints(
   data: ChartData,
   space: number,
   height: number,
-  maxValue: number
+  maxValue: number,
+  pointRadios: number
 ) {
   const increaserValue = (10 / maxValue) * 10;
   return Object.keys(data).map((key, index) => ({
     x: space * index,
-    y: normalizer(data[key]) * increaserValue * ((height - 56) / 10),
+    y: normalizer(data[key]) * increaserValue * ((height - pointRadios*2) / 10),
     key,
     value: data[key],
   }));

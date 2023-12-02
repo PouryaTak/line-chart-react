@@ -7,6 +7,8 @@ export type LineChartProps = {
   color?: string;
   pointRadios: number;
   data: ChartData;
+  v_grid: null | number
+  h_grid: null | number
 };
 
 export type Result = {
