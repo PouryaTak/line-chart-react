@@ -10,7 +10,7 @@ const LineChart = ({
   pointRadios = 10,
   data,
   h_grid = 12,
-  v_grid = 12,
+  v_grid = 15,
 }: LineChartProps) => {
   const style = {
     "--chart-accent-color": color,
@@ -18,9 +18,8 @@ const LineChart = ({
     width,
     color: "var(--chart-accent-color)",
   } as React.CSSProperties;
-  const { path, fillPath, points } = useSVGPath(data, 250, pointRadios);
-  const { horizontalGrids, verticalGrids } = useGridGenerator(h_grid, v_grid, pointRadios);
-  console.log(verticalGrids);
+  const { path, fillPath, points, width:containerWidth } = useSVGPath(data, 250, pointRadios);
+  const {  horizontalGrids, verticalGrids } = useGridGenerator(h_grid, v_grid, pointRadios, containerWidth);
 
   return (
     <div id="pv-line-chart" style={style}>

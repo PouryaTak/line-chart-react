@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ChartData, Points } from "../types/lineChart";
 import {
   convertDataToPoints,
@@ -13,6 +13,7 @@ export default function useSVGPath(
   pointRadios: number
 ) {
   const [space, setSpace] = useState<number | null>(null);
+  const [width, setWidth] = useState<number>(document.querySelector("#ChartView")?.clientWidth || 0);
   const points = useRef<Points[]>([]);
 
   const maxValue = useMemo(
@@ -32,6 +33,7 @@ export default function useSVGPath(
       (Number(chartContainerWidth) - pointsSpace) /
         (Object.keys(data).length - 1)
     );
+    setWidth(Number(chartContainerWidth))
     setSpace(spaceBetweenPoints);
   };
 
@@ -56,5 +58,5 @@ export default function useSVGPath(
 
   useResizeListener(calcXSpacing);
 
-  return { path, fillPath, points: points.current, maxValue, minValue };
+  return { path, fillPath, points: points.current, maxValue, minValue, width };
 }
