@@ -1,14 +1,25 @@
 export type ChartData = {
   [key: string]: number;
 }
+
+type GridProps = {
+  count: null | number;
+  color: string;
+  strokeDasharray: string;
+}
+
 export type LineChartProps = {
   width?: string;
   height?: string;
+  background?: string,
   color?: string;
-  pointRadios: number;
+  points?: {
+    radius: number;
+    color: string
+  };
   data: ChartData;
-  v_grid: null | number
-  h_grid: null | number
+  verticalGrids?: GridProps;
+  horizontalGrids?: GridProps
 };
 
 export type Result = {

@@ -10,7 +10,8 @@ import useResizeListener from "./useResizeListener";
 export default function useSVGPath(
   data: ChartData,
   height: number,
-  pointRadios: number
+  pointRadios: number,
+  container: string
 ) {
   const [space, setSpace] = useState<number | null>(null);
   const [width, setWidth] = useState<number>(document.querySelector("#ChartView")?.clientWidth || 0);
@@ -56,7 +57,7 @@ export default function useSVGPath(
     [data, path, space]
   );
 
-  useResizeListener(calcXSpacing);
+  useResizeListener(calcXSpacing,[container]);
 
   return { path, fillPath, points: points.current, maxValue, minValue, width };
 }

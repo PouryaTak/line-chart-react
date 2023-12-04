@@ -12,7 +12,7 @@ export default function useGridGenerator(
   pointRadios: number,
   width: number
 ) {
-  const horizontalGrids = useMemo(() => {
+  const horizontalGridsPoints = useMemo(() => {
     const horizontalStyle: Grid[] = [];
     if (h_grid === null) return horizontalStyle;
     for (let i = 0; i < h_grid; ++i) {
@@ -26,7 +26,7 @@ export default function useGridGenerator(
     return horizontalStyle;
   }, [h_grid, pointRadios, width]);
 
-  const verticalGrids = useMemo(() => {
+  const verticalGridsPoints = useMemo(() => {
     const verticalStyle: Grid[] = [];
     if (v_grid === null) return verticalStyle;
     for (let i = 0; i < v_grid; ++i) {
@@ -40,5 +40,5 @@ export default function useGridGenerator(
     return verticalStyle;
   }, [pointRadios, v_grid, width]);
 
-  return { horizontalGrids, verticalGrids };
+  return { horizontalGridsPoints, verticalGridsPoints };
 }

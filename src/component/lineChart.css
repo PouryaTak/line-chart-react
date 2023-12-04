@@ -7,14 +7,14 @@
 }
 
 #pv-line-chart .path {
-    stroke-dasharray: 2000;
-    stroke-dashoffset: 2000;
+    stroke-dasharray: 200%;
+    stroke-dashoffset: 200%;
     animation: dash 2s ease-in-out forwards;
   }
   
   @keyframes dash {
     to {
-        stroke-dashoffset: 0;
+        stroke-dashoffset: 0%;
     }
   }
   
