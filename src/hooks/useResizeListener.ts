@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 export default function useResizeListener(callback: () => void, dependencies: any[]) {
     const debounce = () => {
-        let timer: number;
+        let timer: NodeJS.Timeout;
         return (): void => {
           clearTimeout(timer);
           timer = setTimeout(callback, 300);
@@ -16,5 +16,5 @@ export default function useResizeListener(callback: () => void, dependencies: an
         return () => {
           window.removeEventListener("resize", reCalculate);
         };
-      }, [...dependencies]);
+      }, [callback, reCalculate, ...dependencies]);
 }

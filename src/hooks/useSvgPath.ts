@@ -57,7 +57,7 @@ export default function useSVGPath(
     [data, path, space]
   );
 
-  useResizeListener(calcXSpacing,[container]);
+  useResizeListener(calcXSpacing,[container, pointRadios]);
 
   return { path, fillPath, points: points.current, maxValue, minValue, width };
 }

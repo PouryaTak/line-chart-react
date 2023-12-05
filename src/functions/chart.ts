@@ -1,5 +1,7 @@
 import { ChartData, Points } from "../types/lineChart";
 
+const constantValue = 10
+
 export function normalizer(val: number, min = 0, max = 10) {
   return (val - min) / (max - min);
 }
@@ -11,10 +13,10 @@ export function convertDataToPoints(
   maxValue: number,
   pointRadios: number
 ) {
-  const increaserValue = (10 / maxValue) * 10;
+  const increaserValue = (constantValue / maxValue) * constantValue;
   return Object.keys(data).map((key, index) => ({
     x: space * index,
-    y: normalizer(data[key]) * increaserValue * ((height - pointRadios*2) / 10),
+    y: normalizer(data[key]) * increaserValue * ((height - pointRadios*2) / constantValue),
     key,
     value: data[key],
   }));
